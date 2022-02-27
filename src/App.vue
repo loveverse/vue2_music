@@ -1,22 +1,21 @@
 <template>
   <div id="app">
-    <Header></Header>
-    <Main></Main>
-    <!-- <Footer></Footer> -->
-    <!-- <Login></Login> -->
+    <div class="inApp">
+      <Header></Header>
+      <Main></Main>
+      <!-- <Login></Login> -->
+    </div>
   </div>
 </template>
 <script>
 import Header from "./components/Header/Header.vue";
 import Main from "./views/Main/Main.vue";
-// import Footer from "./components/Footer/Footer.vue";
 // import Login from './components/Login/Login.vue';
 export default {
   name: "App",
   components: {
     Header,
     Main,
-    // Footer,
     // Login
   },
 };
@@ -150,5 +149,8 @@ table {
 a {
   text-decoration: none;
 }
-
+.inApp {
+  width: 1200px;
+  margin: 0 auto;
+}
 </style>

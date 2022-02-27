@@ -24,5 +24,8 @@ export default {
     },
     SAVE_RECOMMENDLIST(state, data){
         state.recommendList = data
+    },
+    SAVE_HOTSONGLIST(state, data){
+        state.hotSongList = data
     }
 }

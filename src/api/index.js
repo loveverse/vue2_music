@@ -13,6 +13,8 @@ const reqLotout = () => ajax('/logout')
 const reqUserDetail = (uid) => ajax(`/user/detail?uid=${uid}`)
 // 获取推荐歌单
 const reqRecommendThePlayList = () => ajax('/recommend/resource')
+// 获取热门歌单分类
+const reqHotSongList = () => ajax('/playlist/hot')
 
 
 export {
@@ -21,5 +23,6 @@ export {
     reqQrCode,
     reqLotout,
     reqUserDetail,
-    reqRecommendThePlayList
+    reqRecommendThePlayList,
+    reqHotSongList
 }

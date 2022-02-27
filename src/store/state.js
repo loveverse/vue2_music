@@ -3,5 +3,6 @@ export default {
     dialogVisible: false,
     cookie_music: localStorage.getItem('cookie_music'),
     id: '',
-    recommendList: []
+    recommendList: [],
+    hotSongList: []
 }

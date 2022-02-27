@@ -171,7 +171,20 @@ export default {
   margin: 0 auto;
 }
 .el-header {
-  background-color: #b3c0d1;
+  // background-color: #b3c0d1;
+
+  background: #4284db; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #29eac4,
+    #4284db
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #29eac4,
+    #4284db
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   color: #333;
   text-align: center;
   line-height: 70px;

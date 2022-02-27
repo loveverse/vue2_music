@@ -1,33 +1,40 @@
 <template>
-  <el-container>
-    <el-main>
-      <h2 class="recommendTitle">歌单推荐</h2>
-      <el-tabs type="border-card">
-        <el-tab-pane label="用户管理">用户管理</el-tab-pane>
-        <el-tab-pane label="配置管理">配置管理</el-tab-pane>
-        <el-tab-pane label="角色管理">角色管理</el-tab-pane>
-        <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
-      </el-tabs>
-    </el-main>
-  </el-container>
+  <el-main width="1200px">
+    <h2 class="recommendTitle">歌单推荐</h2>
+    <el-tabs type="border-card">
+      <el-tab-pane :label="item.name" v-for="item in hotSongList.tags" :key="item.id">{{item.name}}</el-tab-pane>
+    </el-tabs>
+  </el-main>
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import { mapState } from "vuex";
 export default {
   name: "Main",
   computed: {
-    ...mapState(["token"])
+    ...mapState(["hotSongList"]),
   },
   mounted() {
-    if(this.token){
-      this.$store.dispatch("getRecommendList");
-    }
+    this.$store.dispatch("getHotSongList")
   },
 };
 </script>
 
 <style lang="less" scoped>
-.recommendTitle {
+.el-main{
+  padding: 0;
+  .recommendTitle{
+    font-size: 24px;
+    text-align: center;
+    margin: 10px;
+  }
 }
+// #main {
+//   width: 1200px;
+//   margin: 0 auto;
+//   padding: 0;
+// }
+// /deep/.el-main{
+//   padding: 0;
+// }
 </style>
