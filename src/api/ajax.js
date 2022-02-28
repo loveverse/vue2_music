@@ -10,7 +10,6 @@ const http = axios.create({
     timeout: 5000,
     // 跨域请求时是否需要使用凭证
     withCredentials: true,
-    timestamp: Date.now()
 })
 http.interceptors.request.use(config => {
     Nprogress.start()

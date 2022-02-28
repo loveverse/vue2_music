@@ -1,4 +1,4 @@
-import { reqHotSongList, reqLogin, reqRecommendThePlayList } from '../api';
+import { reqHotSongList, reqLogin, reqRecommendThePlayList,reqSongListDetail,reqPlayList } from '../api';
 export default {
     async getLogin({ commit }, { phone, password }) {
         const result = await reqLogin(phone, password)
@@ -23,12 +23,32 @@ export default {
     },
     async getHotSongList({commit}){
         const result = await reqHotSongList()
-        console.log(result);
+        // console.log(result);
         if (result.code === 200) {
             commit('SAVE_HOTSONGLIST', result)
             return 'ok'
         } else {
             return Promise.reject(new Error("获取热门歌单失败"))
+        }
+    },
+    async getSongListDetail({commit}, id){
+        const result = await reqSongListDetail(id)
+        // console.log(result); 
+        if (result.code === 200) {
+            commit('SAVE_SONG_LIST_DETAIL', result)
+            return 'ok'
+        } else {
+            return Promise.reject(new Error("获取歌单详情动态失败"))
+        }
+    },
+    async getPlayList({commit}, {cat, limit}){
+        const result = await reqPlayList(cat,limit)
+        // console.log(result);
+        if (result.code === 200) {
+            commit('SAVE_PLAY_LIST', result)
+            return 'ok'
+        } else {
+            return Promise.reject(new Error("获取网友精选碟歌单失败"))
         }
     }
 }

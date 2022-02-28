@@ -12,9 +12,15 @@ const reqLotout = () => ajax('/logout')
 // 用户详情
 const reqUserDetail = (uid) => ajax(`/user/detail?uid=${uid}`)
 // 获取推荐歌单
-const reqRecommendThePlayList = () => ajax('/recommend/resource')
+// const reqRecommendThePlayList = () => ajax('/recommend/resource')
 // 获取热门歌单分类
 const reqHotSongList = () => ajax('/playlist/hot')
+// 获取热门歌单中网友精选碟歌单(order：new，默认为hot    cat: tag,默认为全部    limit: 取出歌单数量,默认为50    offset: 偏移数量)
+const reqPlayList = (cat,limit) => ajax("/top/playlist", {cat,limit,timestamp: Date.now()})
+
+// 获取歌单详情动态
+// const reqSongListDetail = (id) => ajax('/playlist/detail/dynamic', {id})
+
 
 
 export {
@@ -23,6 +29,8 @@ export {
     reqQrCode,
     reqLotout,
     reqUserDetail,
-    reqRecommendThePlayList,
-    reqHotSongList
+    // reqRecommendThePlayList,
+    reqHotSongList,
+    // reqSongListDetail,
+    reqPlayList
 }

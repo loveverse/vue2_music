@@ -27,5 +27,11 @@ export default {
     },
     SAVE_HOTSONGLIST(state, data){
         state.hotSongList = data
+    },
+    SAVE_SONG_LIST_DETAIL(state,data){
+        state.songListDetail = data
+    },
+    SAVE_PLAY_LIST(state, data){
+        state.playList = data
     }
 }

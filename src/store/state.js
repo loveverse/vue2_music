@@ -4,5 +4,7 @@ export default {
     cookie_music: localStorage.getItem('cookie_music'),
     id: '',
     recommendList: [],
-    hotSongList: []
+    hotSongList: [],
+    songListDetail: [],
+    playList: []
 }
