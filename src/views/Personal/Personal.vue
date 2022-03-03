@@ -1,12 +1,14 @@
 <template>
   <div>
-    <ul class="out">
+    <ul class="out" @click.stop="edit">
       <li class="card" v-for="item in findData" :key="item.id">
-        <p class="title">{{item.content}}</p>
-        <div class="songName">
-          <span>评论者：{{item.name}}--</span>
-          <span>歌曲名：{{item.songname}}</span>
-        </div>
+        <a href="javascript:;" :data-id="item.id">
+          <p class="title">{{item.content}}</p>
+          <div class="songName">
+            <span>评论者：{{item.name}}--</span>
+            <span>歌曲名：{{item.songname}}</span>
+          </div>
+        </a>
       </li>
     </ul>
     <div class="iptText">
@@ -45,6 +47,12 @@
             type: "success"
           })
         }
+      },
+      edit(e){
+        if(e.target.className === "card"){
+          // console.log(11);
+        console.log(e.target.dataset);
+        }
       }
     },
     async mounted(){
@@ -73,6 +81,9 @@
       &:hover{
         box-shadow: inset 5px 5px 10px #868b8d,
             inset -5px -5px 10px #ffffff;;
+      }
+      a{
+        display: block;
       }
       .title{
         font-size: 24px;
