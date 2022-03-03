@@ -1,25 +1,11 @@
 <template>
   <div>
     <ul class="out">
-      <li class="card">
-        <p class="title">4324</p>
+      <li class="card" v-for="item in findData" :key="item.id">
+        <p class="title">{{item.content}}</p>
         <div class="songName">
-          <span>评论者：</span>
-          <span>歌曲名：</span>
-        </div>
-      </li>
-      <li class="card">
-        <p class="title">4324</p>
-        <div class="songName">
-          <span>评论者：</span>
-          <span>歌曲名：</span>
-        </div>
-      </li>
-      <li class="card">
-        <p class="title">4324</p>
-        <div class="songName">
-          <span>评论者：</span>
-          <span>歌曲名：</span>
+          <span>评论者：{{item.name}}--</span>
+          <span>歌曲名：{{item.songname}}</span>
         </div>
       </li>
     </ul>
@@ -30,13 +16,13 @@
         placeholder="请输入内容"
         v-model="text">
       </el-input>
-      <el-button type="primary" size="medium">提交</el-button>
+      <el-button type="primary" size="medium" @click="addContent">提交</el-button>
     </div>
   </div>
 </template>
 
 <script>
-  import {getFindData} from '../../api/personal';
+  import {getFindData, getAddData} from '../../api/personal';
   export default {
     name: 'Personal',
     data(){
@@ -45,11 +31,27 @@
         text: ''
       }
     },
+    methods: {
+      async addContent(){
+        if(!this.text){
+          this.$message({
+            message: "输入的内容不能为空！",
+            type: "warning"
+          })
+        }else {
+          const result = await getAddData(this.text)
+          this.$message({
+            message: "内容发布成功！",
+            type: "success"
+          })
+        }
+      }
+    },
     async mounted(){
       // axios.get('http://localhost:3000/find')
       const result = await getFindData()
       this.findData = result
-      console.log(result);
+      // console.log(result);
     }
   }
 </script>
@@ -73,9 +75,10 @@
             inset -5px -5px 10px #ffffff;;
       }
       .title{
-        font-size: 28px;
+        font-size: 24px;
         color: #d8f;
         text-align: center;
+        margin-bottom: 10px;
       }
       .songName{
         text-align: right;
