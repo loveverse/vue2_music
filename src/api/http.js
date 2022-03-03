@@ -1,26 +1,15 @@
 import axios from 'axios'
 import Nprogress from 'nprogress';
 import 'nprogress/nprogress.css'
-import store from '@/store';
 
 
 const http = axios.create({
-    baseURL: "/api",
-    // baseURL: "http://localhost:3000",
+    // baseURL: "/api2",
+    baseURL: "http://localhost:3000",
     timeout: 5000,
-    // 跨域请求时是否需要使用凭证
-    withCredentials: true,
 })
 http.interceptors.request.use(config => {
     Nprogress.start()
-    
-    const token = localStorage.getItem('token_key')
-    // console.log(token);
-    // 统一添加请求头
-    if (token) {
-        // console.log(store.state.cookie_music);
-        config.headers.Cookies = store.state.cookie_music
-    }
     return config
 })
 http.interceptors.response.use(response => {
