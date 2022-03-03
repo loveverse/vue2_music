@@ -19,9 +19,11 @@ router.get('/find', async (ctx, next) => {
   console.log(ctx.body);
 })
 
-router.get('/add/:content', async (ctx, next) => {
+router.get('/add', async (ctx, next) => {
+  // console.log(ctx.request.query.content);
+  // console.log(ctx);
   const addSql = 'insert into hot_word(content) values(?)'
-  const addSqlParams = ctx.request.params.content
+  const addSqlParams = ctx.request.query.content
   // console.log(addSqlParams);
   await DB.query(addSql, addSqlParams)
 
