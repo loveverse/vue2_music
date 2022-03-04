@@ -38,13 +38,8 @@
         isShowEdit: true,
         aId: '',
         compare: '',
-        isDel: false
+        isDel: !!sessionStorage.getItem('flag')
       }
-    },
-    updated(){
-      this.$bus.$on('isDelFn', (flag) => {
-        this.isDel = flag
-      })
     },
     methods: {
       async addContent(){
@@ -99,7 +94,14 @@
       }
     },
     mounted(){
+      // console.log(this.isDel);
+      // this.isDel = 
+      // console.log(this.isDel);
       this.getFindData()
+      // this.$bus.$on('isDelFn', (flag) => {
+      //   sessionStorage.setItem('flag', flag)
+      //   this.isDel = flag
+      // })
     },
     // beforeDestroy(){
     //   this.$bus.$off('isDel')

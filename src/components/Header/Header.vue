@@ -114,9 +114,8 @@ export default {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           await this.$store.dispatch("getLogin", this.user);
-          // console.log(this);
-          // this.dialogVisible = false
-          this.$bus.$emit('isDelFn', true)
+          // this.$bus.$emit('isDelFn', true)
+          sessionStorage.setItem('flag', true)
         } else {
           this.$message.error("请检查输入是否合法！");
           return false;
@@ -133,7 +132,9 @@ export default {
       const result = await reqLotout();
       if (result.code === 200) {
         this.$store.commit("RESET_TOKEN");
-        this.$bus.$emit('isDelFn', localStorage.getItem('token_key'))
+        // sessionStorage.removeItem('flag')
+        // this.$bus.$emit('isDelFn', false)
+        sessionStorage.removeItem('flag')
       } else {
         return Promise.reject(new Error("失败"));
       }

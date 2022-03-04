@@ -7,7 +7,7 @@ import store from '@/store';
 const http = axios.create({
     baseURL: "/api",
     // baseURL: "http://localhost:3000",
-    timeout: 5000,
+    timeout: 50000,
     // 跨域请求时是否需要使用凭证
     withCredentials: true,
 })
