@@ -1,14 +1,16 @@
 <template>
   <div>
-    <ul class="out" @click.stop="edit">
+    <ul class="out">
       <li class="card" v-for="item in findData" :key="item.id">
-        <a href="javascript:;" :data-id="item.id">
-          <p class="title">{{item.content}}</p>
+        <div class="artcle" :data-id="item.id" @click="edit($event,item.content)">
+          <el-input v-if="item.id == aId" v-model="item.content" @blur="update(item.id, item.content)" v-focus></el-input>
+          <p class="title" v-else>{{item.content}}</p>
           <div class="songName" v-if="item.name">
             <span>评论者：{{item.name}}--</span>
             <span>歌曲名：{{item.songname}}</span>
           </div>
-        </a>
+        </div>
+        <el-button type="danger" size="mini" class="del" v-show="isDel" @click="delOneData(item.id)">删除</el-button>
       </li>
     </ul>
     <div class="iptText">
@@ -24,7 +26,7 @@
 </template>
 
 <script>
-  import {getFindData, getAddData} from '../../api/personal';
+  import {getFindData, getAddData, getUpdateData} from '../../api/personal';
   
 
   export default {
@@ -32,12 +34,20 @@
     data(){
       return {
         findData: [],
-        text: ''
+        text: '',
+        isShowEdit: true,
+        aId: '',
+        compare: '',
+        isDel: false
       }
+    },
+    updated(){
+      this.$bus.$on('isDelFn', (flag) => {
+        this.isDel = flag
+      })
     },
     methods: {
       async addContent(){
-        
         if(!this.text){
           this.$message({
             message: "输入的内容不能为空！",
@@ -61,11 +71,27 @@
           this.text = ''
         }
       },
-      edit(e){
-        if(e.target.className === "card"){
-          // console.log(11);
-        console.log(e.target.dataset);
+      edit(e,content){
+        // if(localStorage.getItem('token_key')){
+
+        // }
+        // console.log(e, content);
+        this.aId = e.currentTarget.dataset.id
+        this.compare = content
+      },
+      delOneData(id){
+        console.log(id);
+      },
+      async update(id, content){
+        this.aId = ''
+        if(this.compare !== content){
+          await getUpdateData(id, content)
+          this.$message({
+            message: "内容修改成功！",
+            type: "success"
+          })
         }
+        
       },
       async getFindData(){
         const result = await getFindData()
@@ -74,6 +100,17 @@
     },
     mounted(){
       this.getFindData()
+    },
+    // beforeDestroy(){
+    //   this.$bus.$off('isDel')
+    // },
+    directives: {
+      focus:{
+        inserted: function(el, binding) {
+          // 这里input外层包裹了一层div
+          el.children[0].focus()
+        }
+      }
     }
   }
 </script>
@@ -81,32 +118,44 @@
 <style lang="less" scoped>
   .out{
     background: linear-gradient(145deg, #e7f0f4, #c2cacd);
-    padding: 30px;
+    padding: 30px 100px;
     .card{
+      position: relative;
       // border: 1px solid #454;
-      margin: 0 auto 30px;
-      padding: 10px;
-      border-radius: 15px;
-      box-shadow: 5px 5px 10px #868b8d,
-             -5px -5px 10px #ffffff;;
+      
       &:last-child{
         margin-bottom: 0;
       }
-      &:hover{
-        box-shadow: inset 5px 5px 10px #868b8d,
-            inset -5px -5px 10px #ffffff;;
+      .artcle{
+        margin: 0 auto 30px;
+        padding: 10px;
+        border-radius: 15px;
+        box-shadow: 5px 5px 10px #868b8d,
+              -5px -5px 10px #ffffff;
+        &:hover{
+          box-shadow: inset 5px 5px 10px #868b8d,
+              inset -5px -5px 10px #ffffff;;
+        }
+        .title{
+          font-size: 20px;
+          color: #d8f;
+          text-align: center;
+          margin-bottom: 10px;
+        }
+        .songName{
+          text-align: right;
+        }
       }
-      a{
-        display: block;
-      }
-      .title{
-        font-size: 24px;
-        color: #d8f;
-        text-align: center;
-        margin-bottom: 10px;
-      }
-      .songName{
-        text-align: right;
+      
+      // a{
+      //   display: block;
+      // }
+      
+      .del{
+        position: absolute;
+        right: -70px;
+        top: 50%;
+        transform: translateY(-50%);
       }
     }
   }

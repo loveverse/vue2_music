@@ -111,11 +111,12 @@ export default {
 
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          this.$store.dispatch("getLogin", this.user);
+          await this.$store.dispatch("getLogin", this.user);
           // console.log(this);
           // this.dialogVisible = false
+          this.$bus.$emit('isDelFn', true)
         } else {
           this.$message.error("请检查输入是否合法！");
           return false;
@@ -132,12 +133,13 @@ export default {
       const result = await reqLotout();
       if (result.code === 200) {
         this.$store.commit("RESET_TOKEN");
+        this.$bus.$emit('isDelFn', localStorage.getItem('token_key'))
       } else {
         return Promise.reject(new Error("失败"));
       }
     },
     handleClose() {
-      this.$store.commit("SAVE_DIA", false);
+      this.$store.commit("SAVE_DIA", localStorage.getItem('token_key'));
     },
   },
   // async mounted() {

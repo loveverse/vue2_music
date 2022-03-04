@@ -30,6 +30,7 @@ app.use(router.routes())
 
 const findSql = "select * from hot_word"
 const addSql = "insert into hot_word(content) values(?)"
+const updateSql = "update hot_word set content = ? where id = ?"
 
 
 
@@ -42,9 +43,15 @@ router.get('/find', async (ctx, next) => {
 router.get('/add', async (ctx, next) => {
   const addSqlParams = ctx.request.query.content
   await DB.query(addSql, addSqlParams)
-  ctx.body = await DB.query('select * from hot_word')
+  ctx.body = await DB.query(findSql)
 })
-
+router.get('/update', async (ctx, next) => {
+  // console.log(ctx.request.query);
+  const {id, content} = ctx.request.query
+  const updateSqlParams = [content, id]
+  await DB.query(updateSql, updateSqlParams)
+  ctx.body = await DB.query(findSql)
+})
 
 
 server.listen(3000)
