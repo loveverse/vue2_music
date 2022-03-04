@@ -56,9 +56,9 @@ export default {
         this.playList = []
         this.params.cat = newVal
         const {cat, limit} = this.params
-        console.log(this.params);
+        // console.log(this.params);
         const result = await reqPlayList(cat,limit)
-        console.log(result);
+        // console.log(result);
         this.playList = result.playlists
       }
     }
