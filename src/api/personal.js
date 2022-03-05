@@ -5,3 +5,5 @@ export const getFindData = () => http('/find', {}, 'GET')
 export const getAddData = (content) => http('/add', {content}, "GET")
 
 export const getUpdateData = (id, content) => http('/update', {id, content}, "GET")
+
+export const getDelData = (id) => http('/del', {id}, "GET")

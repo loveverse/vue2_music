@@ -1,5 +1,5 @@
 <template>
-  <el-main width="1200px">
+  <el-main>
     <h2 class="recommendTitle">歌单推荐</h2>
     <el-tabs type="border-card" v-model="params.cat" @tab-click="handleClick">
       <el-tab-pane
@@ -69,6 +69,7 @@ export default {
 <style lang="less" scoped>
 .el-main {
   padding: 0;
+  margin: 0 auto;
   .recommendTitle {
     font-size: 24px;
     text-align: center;
@@ -81,4 +82,5 @@ export default {
     }
   }
 }
+
 </style>

@@ -22,6 +22,8 @@ export default {
 </script>
 
 <style lang="less">
+// @import './assets/public.less';
+
 html,
 body,
 div,
@@ -150,7 +152,28 @@ a {
   text-decoration: none;
 }
 .inApp {
-  width: 1200px;
+  // width: 1200px;
   margin: 0 auto;
 }
+
+// /* 中型大小设备（横屏的平板, 小于 768px） */
+// @media only screen and (max-width: 768px) {
+//   .inApp {
+//     width: 500px;
+//   }
+// }
+// /* 大型设备（电脑, 大于 768和小于1200） */
+// @media only screen and (min-width: 768px) and (max-width: 1200px) {
+//   .inApp {
+//     width: 1000px;
+//   }
+// }
+// /* 超大型设备（大尺寸电脑屏幕, 大于 1200px） */
+// @media only screen and (min-width: 1200px) {
+//   .inApp {
+//     width: 1200px;
+//   }
+// }
+
+
 </style>

@@ -16,7 +16,7 @@
         center
         title="手机号登录"
         :visible.sync="dialogVisible"
-        width="25%"
+        width="350px"
         :before-close="handleClose"
       >
         <el-form
@@ -114,8 +114,9 @@ export default {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           await this.$store.dispatch("getLogin", this.user);
-          // this.$bus.$emit('isDelFn', true)
-          sessionStorage.setItem('flag', true)
+          // 登录时传过去一个flag，保证实时刷新，同时存储下flag，保证下次登录可以拿到状态
+          this.$bus.$emit('isDelFn', true)
+          localStorage.setItem('flag', true)
         } else {
           this.$message.error("请检查输入是否合法！");
           return false;
@@ -132,9 +133,8 @@ export default {
       const result = await reqLotout();
       if (result.code === 200) {
         this.$store.commit("RESET_TOKEN");
-        // sessionStorage.removeItem('flag')
-        // this.$bus.$emit('isDelFn', false)
-        sessionStorage.removeItem('flag')
+        this.$bus.$emit('isDelFn', false)
+        localStorage.removeItem('flag')
       } else {
         return Promise.reject(new Error("失败"));
       }
@@ -166,14 +166,37 @@ export default {
 </script>
 
 <style lang="less">
+// @import '../../assets/public.less';
+
 @bcolor: #fee;
 .outer-container {
   background-color: @bcolor;
 }
+
 .base-public {
-  width: 1200px;
+  // width: 1200px;
   margin: 0 auto;
 }
+
+// /* 中型大小设备（横屏的平板, 小于 768px） */
+// @media only screen and (max-width: 768px) {
+//   .base-public {
+//     width: 500px;
+//   }
+// }
+// /* 大型设备（电脑, 大于 768和小于1200） */
+// @media only screen and (min-width: 768px) and (max-width: 1200px) {
+//   .base-public {
+//     width: 1000px;
+//   }
+// }
+// /* 超大型设备（大尺寸电脑屏幕, 大于 1200px） */
+// @media only screen and (min-width: 1200px) {
+//   .base-public {
+//     width: 1200px;
+//   }
+// }
+
 .el-header {
   // background-color: #b3c0d1;
 

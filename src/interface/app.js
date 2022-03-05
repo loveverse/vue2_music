@@ -31,7 +31,7 @@ app.use(router.routes())
 const findSql = "select * from hot_word"
 const addSql = "insert into hot_word(content) values(?)"
 const updateSql = "update hot_word set content = ? where id = ?"
-
+const delSql = "delete from hot_word where id = ?"
 
 
 // 查
@@ -53,6 +53,12 @@ router.get('/update', async (ctx, next) => {
   ctx.body = await DB.query(findSql)
 })
 
+router.get('/del', async (ctx, next) => {
+  const delSqlParams = ctx.request.query.id
+  // console.log(delSqlParams);
+  await DB.query(delSql, delSqlParams)
+  ctx.body = await DB.query(findSql)
+})
 
 server.listen(3000)
 

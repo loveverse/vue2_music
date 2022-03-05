@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ul class="out">
+    <ul class="out" :class="isDel && 'outPad'">
       <li class="card" v-for="item in findData" :key="item.id">
         <div class="artcle" :data-id="item.id" @click="edit($event,item.content)">
           <el-input v-if="item.id == aId" v-model="item.content" @blur="update(item.id, item.content)" v-focus></el-input>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import {getFindData, getAddData, getUpdateData} from '../../api/personal';
+  import {getFindData, getAddData, getUpdateData,getDelData} from '../../api/personal';
   
 
   export default {
@@ -38,10 +38,21 @@
         isShowEdit: true,
         aId: '',
         compare: '',
-        isDel: !!sessionStorage.getItem('flag')
+        isDel: !!localStorage.getItem('flag')
       }
     },
     methods: {
+      websocketTransfer(){
+        const ws = new WebSocket('ws://localhost:3000')
+        // 客户端与服务端建立连接时触发，此时可向服务端传递参数
+        ws.onopen = function(){
+          ws.send(undefined)
+        }
+        // 客户端收到服务端发来的消息
+        ws.onmessage = (res) => {
+          this.findData = JSON.parse(res.data)
+        }
+      },
       async addContent(){
         if(!this.text){
           this.$message({
@@ -50,15 +61,7 @@
           })
         }else {
           const result = await getAddData(this.text)
-          const ws = new WebSocket('ws://localhost:3000')
-          // 客户端与服务端建立连接时触发，此时可向服务端传递参数
-          ws.onopen = function(){
-            ws.send(undefined)
-          }
-          // 客户端收到服务端发来的消息
-          ws.onmessage = (res) => {
-            this.findData = JSON.parse(res.data)
-          }
+          this.websocketTransfer()
           this.$message({
             message: "内容发布成功！",
             type: "success"
@@ -67,15 +70,22 @@
         }
       },
       edit(e,content){
-        // if(localStorage.getItem('token_key')){
-
-        // }
+        if(this.isDel){
+          this.aId = e.currentTarget.dataset.id
+          this.compare = content
+        }
         // console.log(e, content);
-        this.aId = e.currentTarget.dataset.id
-        this.compare = content
+        
       },
-      delOneData(id){
-        console.log(id);
+      async delOneData(id){
+        // console.log(id);
+        const result = await getDelData(id)
+        this.websocketTransfer()
+        // console.log(result);
+        this.$message({
+          message: "内容删除成功！",
+          type: "success"
+        })
       },
       async update(id, content){
         this.aId = ''
@@ -98,10 +108,10 @@
       // this.isDel = 
       // console.log(this.isDel);
       this.getFindData()
-      // this.$bus.$on('isDelFn', (flag) => {
-      //   sessionStorage.setItem('flag', flag)
-      //   this.isDel = flag
-      // })
+      this.$bus.$on('isDelFn', (flag) => {
+        localStorage.setItem('flag', flag)
+        this.isDel = flag
+      })
     },
     // beforeDestroy(){
     //   this.$bus.$off('isDel')
@@ -118,9 +128,10 @@
 </script>
 
 <style lang="less" scoped>
+  
   .out{
     background: linear-gradient(145deg, #e7f0f4, #c2cacd);
-    padding: 30px 100px;
+    padding: 30px;
     .card{
       position: relative;
       // border: 1px solid #454;
@@ -160,6 +171,9 @@
         transform: translateY(-50%);
       }
     }
+  }
+  .outPad{
+    padding-right: 100px;
   }
   .iptText{
     display: flex;
