@@ -3,7 +3,7 @@
     <ul class="out" :class="isDel && 'outPad'">
       <li class="card" v-for="item in findData" :key="item.id">
         <div class="artcle" :data-id="item.id" @click="edit($event,item.content)">
-          <el-input v-if="item.id == aId" v-model="item.content" @blur="update(item.id, item.content)" v-focus></el-input>
+          <el-input v-if="item.id == aId" v-model="item.content" @blur="update(item.id, item.content)" @keyup.enter.native="blur" v-focus></el-input>
           <p class="title" v-else>{{item.content}}</p>
           <div class="songName" v-if="item.name">
             <span>评论者：{{item.name}}--</span>
@@ -27,7 +27,6 @@
 
 <script>
   import {getFindData, getAddData, getUpdateData,getDelData} from '../../api/personal';
-  
 
   export default {
     name: 'Personal',
@@ -43,7 +42,7 @@
     },
     methods: {
       websocketTransfer(){
-        const ws = new WebSocket('ws://localhost:3000')
+        const ws = new WebSocket('ws://1.12.252.87:3000')
         // 客户端与服务端建立连接时触发，此时可向服务端传递参数
         ws.onopen = function(){
           ws.send(undefined)
@@ -77,6 +76,9 @@
         // console.log(e, content);
         
       },
+      blur(e){
+        e.target.blur()
+      },
       async delOneData(id){
         // console.log(id);
         const result = await getDelData(id)
@@ -96,7 +98,6 @@
             type: "success"
           })
         }
-        
       },
       async getFindData(){
         const result = await getFindData()

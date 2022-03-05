@@ -5,7 +5,7 @@ import 'nprogress/nprogress.css'
 
 const http = axios.create({
     // baseURL: "/api2",
-    baseURL: "http://localhost:3000",
+    baseURL: "http://1.12.252.87:3000",
     timeout: 50000,
 })
 http.interceptors.request.use(config => {
