@@ -1,10 +1,10 @@
 <template>
   <div>
-    <ul class="out" :class="isDel && 'outPad'">
+    <ul class="out" :class="isDel && 'outPad'" >
       <li class="card" v-for="item in findData" :key="item.id">
-        <div class="artcle" :data-id="item.id" @click="edit($event,item.content)">
-          <el-input v-if="item.id == aId" v-model="item.content" @blur="update(item.id, item.content)" @keyup.enter.native="blur" v-focus></el-input>
-          <p class="title" v-else>{{item.content}}</p>
+        <div class="artcle" >
+          <el-input type="textarea" autosize v-if="item.id == aId" v-model="item.content" @blur="update(item.id, item.content)" @keyup.enter.native="blur" v-focus></el-input>
+          <p class="title" v-else :data-id="item.id" @click="edit($event,item.content)">{{item.content}}</p>
           <div class="songName" v-if="item.name">
             <span>评论者：{{item.name}}--</span>
             <span>歌曲名：{{item.songname}}</span>
@@ -42,7 +42,8 @@
     },
     methods: {
       websocketTransfer(){
-        const ws = new WebSocket('ws://1.12.252.87:3000')
+        // const ws = new WebSocket('ws://1.12.252.87:3000')
+        const ws = new WebSocket('ws://localhost:3000')
         // 客户端与服务端建立连接时触发，此时可向服务端传递参数
         ws.onopen = function(){
           ws.send(undefined)
@@ -53,11 +54,12 @@
         }
       },
       async addContent(){
-        if(!this.text){
+        if(!this.text.trim()){
           this.$message({
             message: "输入的内容不能为空！",
             type: "warning"
           })
+          this.text = ''
         }else {
           const result = await getAddData(this.text)
           this.websocketTransfer()
@@ -68,10 +70,11 @@
           this.text = ''
         }
       },
+      // 编辑模式
       edit(e,content){
         if(this.isDel){
           this.aId = e.currentTarget.dataset.id
-          this.compare = content
+          this.compare = content.trim()
         }
         // console.log(e, content);
         
@@ -91,13 +94,16 @@
       },
       async update(id, content){
         this.aId = ''
+        content = content.trim()
         if(this.compare !== content){
+          if(!content) this.delOneData(id)
           await getUpdateData(id, content)
           this.$message({
             message: "内容修改成功！",
             type: "success"
           })
         }
+        this.compare = content.trim()
       },
       async getFindData(){
         const result = await getFindData()
@@ -131,7 +137,7 @@
 <style lang="less" scoped>
   
   .out{
-    background: linear-gradient(145deg, #e7f0f4, #c2cacd);
+    background: #efeeee;;
     padding: 30px;
     .card{
       position: relative;
@@ -143,17 +149,27 @@
       .artcle{
         margin: 0 auto 30px;
         padding: 10px;
+        height: 100px;
         border-radius: 15px;
-        box-shadow: 5px 5px 10px #868b8d,
-              -5px -5px 10px #ffffff;
+        box-shadow: 18px 18px 30px rgba(0, 0, 0, 0.2),
+          -18px -18px 30px rgba(255, 255, 255, 1);
+        /* 过渡时间 ease-out是指先快速 后慢速 */
+        transition: all 0.2s ease-out;
+        // box-shadow: 5px 5px 10px #868b8d,
+        //       -5px -5px 10px #ffffff;
         &:hover{
-          box-shadow: inset 5px 5px 10px #868b8d,
-              inset -5px -5px 10px #ffffff;;
+          /* inset 是内部阴影 默认是外部阴影outset */
+          box-shadow: 0 0 0 rgba(0, 0, 0, 0.2), 0 0 0 rgba(255, 255, 255, 0.8),
+            inset 18px 18px 30px rgba(0, 0, 0, 0.1),
+            inset -18px -18px 30px rgba(255, 255, 255, 1);
+          // box-shadow: inset 5px 5px 10px #868b8d,
+          //     inset -5px -5px 10px #ffffff;
         }
         .title{
           font-size: 20px;
-          color: #d8f;
+          color: #66b1ff;
           text-align: center;
+          font-weight: 600;
           margin-bottom: 10px;
         }
         .songName{
