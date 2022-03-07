@@ -5,10 +5,10 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: "/",
-    redirect: "/main"
-  },
+  // {
+  //   path: "/",
+  //   redirect: "/main"
+  // },
   // {
   //   path: "/about",
   //   name: "About",
@@ -18,6 +18,15 @@ const routes = [
   //   component: () =>
   //     import(/* webpackChunkName: "about" */ "../views/About.vue"),
   // },
+  {
+    path: "/",
+    component: () => import('../views/Home/Home.vue')
+  },
+  {
+    path: "/hot",
+    name: "hot",
+    component: () => import('../views/HotWord/HotWord.vue')
+  },
   {
     path: "/main",
     name: "main",

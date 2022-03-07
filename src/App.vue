@@ -1,8 +1,11 @@
 <template>
   <div id="app">
     <div class="inApp">
-      <Header></Header>
-      <router-view></router-view>
+      <!-- <Header></Header> -->
+      <TabBar></TabBar>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
       <!-- <Login></Login> -->
     </div>
   </div>
@@ -10,12 +13,14 @@
 <script>
 import Header from "./components/Header/Header.vue";
 import Main from "./views/Main/Main.vue";
+import TabBar from './components/TabBar/TabBar.vue';
 // import Login from './components/Login/Login.vue';
 export default {
   name: "App",
   components: {
     Header,
     Main,
+    TabBar
     // Login
   },
 };
@@ -152,7 +157,8 @@ a {
   text-decoration: none;
 }
 .inApp {
-  // width: 1200px;
+  
+  max-width: 1200px;
   margin: 0 auto;
 }
 

@@ -5,7 +5,7 @@
         <li><router-link to="/main">首页</router-link></li>
         <li><span>排行榜</span></li>
         <li><span>歌单</span></li>
-        <li><router-link to="/personal">个人主页</router-link></li>
+        <!-- <li><router-link to="/personal">个人主页</router-link></li> -->
         <li class="header-search"><Search></Search></li>
         <li>
           <el-button v-if="!token" @click="login">登录</el-button>

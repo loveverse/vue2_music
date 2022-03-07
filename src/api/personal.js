@@ -1,9 +1,9 @@
 import http from './http';
 
-export const getFindData = () => http('/find', {}, 'GET')
+export const reqFindData = () => http('/find', {}, 'GET')
 
-export const getAddData = (content) => http('/add', {content}, "GET")
+export const reqAddData = (content) => http('/add', {content}, "GET")
 
-export const getUpdateData = (id, content) => http('/update', {id, content}, "GET")
+export const reqUpdateData = (id, content) => http('/update', {id, content}, "GET")
 
-export const getDelData = (id) => http('/del', {id}, "GET")
+export const reqDelData = (id) => http('/del', {id}, "GET")

@@ -36,7 +36,7 @@
 </template>
 
 <script>
-  import {getFindData, getAddData, getUpdateData,getDelData} from '../../api/personal';
+  import {reqFindData, reqAddData, reqUpdateData,reqDelData} from '../../api/personal';
   import axios from 'axios';
   export default {
     name: 'Personal',
@@ -71,7 +71,7 @@
           })
           this.text = ''
         }else {
-          const result = await getAddData(this.text)
+          const result = await reqAddData(this.text)
           this.websocketTransfer()
           this.$message({
             message: "内容发布成功！",
@@ -94,7 +94,7 @@
       },
       async delOneData(id){
         // console.log(id);
-        const result = await getDelData(id)
+        const result = await reqDelData(id)
         this.websocketTransfer()
         // console.log(result);
         this.$message({
@@ -107,7 +107,7 @@
         content = content.trim()
         if(this.compare !== content){
           if(!content) this.delOneData(id)
-          await getUpdateData(id, content)
+          await reqUpdateData(id, content)
           this.$message({
             message: "内容修改成功！",
             type: "success"
@@ -116,7 +116,7 @@
         this.compare = content.trim()
       },
       async getFindData(){
-        const result = await getFindData()
+        const result = await reqFindData()
         this.findData = result
       },
       beforeUpload(file){
