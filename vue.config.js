@@ -8,6 +8,13 @@ module.exports = {
                 pathRewrite: {
                     '^/api': ''
                 }
+            },
+            '/api2': {
+                target: 'http://note.loveverse.top/',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/api2': ''
+                }
             }
         },
     },

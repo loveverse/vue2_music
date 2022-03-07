@@ -22,12 +22,22 @@
       </el-input>
       <el-button type="primary" size="medium" @click="addContent">提交</el-button>
     </div>
+    <el-upload
+      class="upload-demo"
+      drag
+      :before-upload="beforeUpload"
+      action="/api2"
+      multiple>
+      <i class="el-icon-upload"></i>
+      <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+      <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+    </el-upload>
   </div>
 </template>
 
 <script>
   import {getFindData, getAddData, getUpdateData,getDelData} from '../../api/personal';
-
+  import axios from 'axios';
   export default {
     name: 'Personal',
     data(){
@@ -108,6 +118,19 @@
       async getFindData(){
         const result = await getFindData()
         this.findData = result
+      },
+      beforeUpload(file){
+        let fd = new FormData()
+        fd.append('filename', file)
+        axios.post('/api2', fd).then(res => {
+          console.log(res);
+          // if(res.data.success){
+          //   this.$message.success('上传成功')
+          // }else{
+          //   this.$message.error('上传失败')
+          // }
+        })
+        
       }
     },
     mounted(){
@@ -170,7 +193,8 @@
           color: #66b1ff;
           text-align: center;
           font-weight: 600;
-          margin-bottom: 10px;
+          padding-bottom: 13px;
+          // margin-bottom: 10px;
         }
         .songName{
           text-align: right;

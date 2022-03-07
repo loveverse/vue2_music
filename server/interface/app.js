@@ -25,7 +25,7 @@ wss.on('connection', async function connection(ws) {
       // 消息id
       let messageIndex = 0
       // let msg = async function () {
-        messageIndex++
+        // messageIndex++
         // 需要返回的数据
         const result = await DB.query(findSql)
         // 返回一个JSON字符串
