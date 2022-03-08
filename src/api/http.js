@@ -1,6 +1,6 @@
-import axios from 'axios'
+import axios from 'axios';
 import Nprogress from 'nprogress';
-import 'nprogress/nprogress.css'
+import 'nprogress/nprogress.css';
 
 
 const http = axios.create({
@@ -8,15 +8,15 @@ const http = axios.create({
     timeout: 50000,
 })
 http.interceptors.request.use(config => {
-    Nprogress.start()
-    return config
+    Nprogress.start();
+    return config;
 })
 http.interceptors.response.use(response => {
-    Nprogress.done()
+    Nprogress.done();
     // console.log(response);
-    return response
+    return response;
 }, error => {
-    Nprogress.done()
+    Nprogress.done();
     // 错误响应信息
     // console.log(error.response);
     if (error && error.response) {
