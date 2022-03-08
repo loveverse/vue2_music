@@ -1,5 +1,7 @@
 import http from './http';
 
-export const reqFindData = () => http('/find', {}, 'GET')
+// 查询
+export const reqFindData = () => http('/find')
 
-export const reqAddData = (content) => http('/add', {content}, "GET")
+// 分页查询
+export const reqPageFindData = (limit, page) => http('/pageQuery', {limit,page})

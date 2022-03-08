@@ -66,7 +66,7 @@ http.interceptors.response.use(response => {
     return Promise.reject(error.message)
 })
 
-export default function ajax(url, data = {}, type = "POST") {
+export default function ajax(url, data = {}, type = "GET") {
     // data作为请求体发送的的数据只适用put,post,patch
     let promise;
     return new Promise((resolve, reject) => {

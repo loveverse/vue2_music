@@ -4,25 +4,38 @@
       <li class="card" v-for="item in findData" :key="item.id">
         <p class="title">{{item.content}}</p>
         <a :href="item.url">
-          --来自音乐《{{item.name}}》
+          --来自网易云音乐《{{item.name}}》
         </a>
       </li>
     </ul>
-  <el-backtop :bottom="100">
-    <div class="backtop">
-      
-    </div>
-  </el-backtop>
+    <el-pagination
+      style="text-align: center"
+      small
+      @current-change="handlerPage"
+      background
+      :current-page="currentPage"
+      :page-size="10"
+      :pager-count="5"
+      layout="prev, pager, next, total"
+      :total="total">
+    </el-pagination>
+    <el-backtop :bottom="100">
+      <div class="backtop">
+      </div>
+    </el-backtop>
   </div>
 </template>
 
 <script>
-import {reqFindData} from '../../api/personal';
+import { reqPageFindData} from '../../api/personal';
   export default {
     name: 'HotWord',
     data() {
       return {
-        findData: []
+        findData: [],
+        limit: 10,    // 每页显示数
+        currentPage: 1,   // 当前页
+        total: 0,
       }
     },
     methods: {
@@ -38,17 +51,23 @@ import {reqFindData} from '../../api/personal';
           this.findData = JSON.parse(res.data)
         }
       },
-      async getFindData(){
-        const result = await reqFindData()
-        this.findData = result
-      }
+      // 改变当前页触发的事件
+      async handlerPage(page = 1){
+        this.currentPage = page
+        const result = await reqPageFindData(this.limit, this.currentPage)
+        this.findData = result.list
+        console.log(this.findData);
+        this.total = result.total
+      },
     },
     mounted(){
-      this.getFindData()
+      this.handlerPage()
       this.$notify({
         message: "点击歌名可跳转到对应歌曲",
         duration: 2000
       })
+
+      
     }
   }
 </script>
