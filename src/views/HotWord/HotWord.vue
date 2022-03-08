@@ -34,7 +34,7 @@ import { reqPageFindData} from '../../api/personal';
       return {
         findData: [],
         limit: 10,    // 每页显示数
-        currentPage: 1,   // 当前页
+        currentPage: parseInt(sessionStorage.getItem('page')),   // 当前页
         total: 0,
       }
     },
@@ -54,20 +54,21 @@ import { reqPageFindData} from '../../api/personal';
       // 改变当前页触发的事件
       async handlerPage(page = 1){
         this.currentPage = page
+        sessionStorage.setItem('page', this.currentPage)
         const result = await reqPageFindData(this.limit, this.currentPage)
         this.findData = result.list
-        console.log(this.findData);
+        // console.log(this.findData);
         this.total = result.total
       },
     },
     mounted(){
-      this.handlerPage()
+      let page = parseInt(sessionStorage.getItem('page'))
+      // 有page就传，没有就传默认值1
+      this.handlerPage(page || 1)
       this.$notify({
         message: "点击歌名可跳转到对应歌曲",
         duration: 2000
       })
-
-      
     }
   }
 </script>
@@ -100,6 +101,7 @@ import { reqPageFindData} from '../../api/personal';
           font-size: 20px;
           margin-bottom: 10px;
           line-height: 30px;
+          white-space: pre-wrap;
         }
         a{
           // display: block;

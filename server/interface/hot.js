@@ -4,7 +4,6 @@ const WebSocket = require('ws')
 const cors = require('koa2-cors')
 const router = require('koa-router')()
 const DB = require('../mysql/sqlConfig')
-// const WebSocketApi = require('../utils/ws')
 
 
 // 创建一个Koa对象
@@ -16,35 +15,26 @@ const wss = new WebSocket.Server({ server })    // 同一端口监听不同的�
 const findSql = "select * from hot"
 // 数据库查询10条（0，10）
 // limit m(跳过m条),n（取n条记录）
-const pageFindSql = "select * from hot limit ?,?"
+// 倒序拿到10条数据
+const pageFindSql = "select * from hot order by id desc limit ?,?"
 
 
-wss.on('connection', async function connection(ws) {
+wss.on('connection', function connection(ws) {
   ws.on('message', async function incoming(message) {
-      // 消息id
-      let messageIndex = 0
-        const result = await DB.query(findSql)
-
-      wss.clients.forEach((client) => {
-        messageIndex++
-
-        // console.log(client);
-        client.send(JSON.stringify(result))
-      })
-    // }
-
-
+    // 消息id
+    let messageIndex = 0
+    const result = await DB.query(findSql)
+    wss.clients.forEach((client) => {
+      messageIndex++
+      client.send(JSON.stringify(result))
+    })
   })
 })
 
 
-// WebSocketApi(wss)
-
 // 处理跨域
 app.use(cors())
 app.use(router.routes())
-
-
 
 
 // 查
@@ -64,12 +54,11 @@ router.get('/pageQuery', async (ctx, next) => {
   // console.log(pageFindSqlParams);
   let total = await DB.query(findSql)
   let list = await DB.query(pageFindSql, pageFindSqlParams)
+  // 解决不换行：replace全局替换和v-html
   // list.forEach(e => {
-  //   e.content = e.content.replace("\n", "<br/>")
+  //   e.content = e.content.replace(/\n/g, "<br/>")
   // })
   ctx.body = {total: total.length, list}
-  // console.log(ctx.body);
-  // console.log(ctx.body);
 
 })
 
