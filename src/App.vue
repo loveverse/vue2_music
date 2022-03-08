@@ -1,33 +1,27 @@
 <template>
   <div id="app">
     <div class="inApp">
-      <!-- <Header></Header> -->
       <TabBar></TabBar>
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
-      <!-- <Login></Login> -->
+
     </div>
   </div>
 </template>
 <script>
-import Header from "./components/Header/Header.vue";
-import Main from "./views/Main/Main.vue";
+
 import TabBar from './components/TabBar/TabBar.vue';
 // import Login from './components/Login/Login.vue';
 export default {
   name: "App",
   components: {
-    Header,
-    Main,
     TabBar
-    // Login
   },
 };
 </script>
 
 <style lang="less">
-// @import './assets/public.less';
 
 html,
 body,
@@ -157,29 +151,10 @@ a {
   text-decoration: none;
 }
 .inApp {
-  
   max-width: 1200px;
   margin: 0 auto;
 }
 
-// /* 中型大小设备（横屏的平板, 小于 768px） */
-// @media only screen and (max-width: 768px) {
-//   .inApp {
-//     width: 500px;
-//   }
-// }
-// /* 大型设备（电脑, 大于 768和小于1200） */
-// @media only screen and (min-width: 768px) and (max-width: 1200px) {
-//   .inApp {
-//     width: 1000px;
-//   }
-// }
-// /* 超大型设备（大尺寸电脑屏幕, 大于 1200px） */
-// @media only screen and (min-width: 1200px) {
-//   .inApp {
-//     width: 1200px;
-//   }
-// }
 
 
 </style>
