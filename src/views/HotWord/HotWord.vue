@@ -1,6 +1,6 @@
 <template>
   <div class="hotword">
-    <ul class="out">
+    <ul class="out" v-if="findData">
       <li class="card" v-for="item in findData" :key="item.id">
         <p class="title">{{item.content}}</p>
         <a :href="item.url">
@@ -9,7 +9,7 @@
       </li>
     </ul>
     <el-pagination
-      style="text-align: center"
+      style="text-align: center;margin-bottom: 20px"
       small
       @current-change="handlerPage"
       background
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { reqPageFindData} from '../../api/personal';
+import { reqPageFindData} from '../../api';
   export default {
     name: 'HotWord',
     data() {
@@ -58,7 +58,6 @@ import { reqPageFindData} from '../../api/personal';
         sessionStorage.setItem('page', this.currentPage)
         const result = await reqPageFindData(this.limit, this.currentPage)
         this.findData = result.list
-        // console.log(this.findData);
         this.total = result.total
       }
     },
@@ -121,17 +120,10 @@ import { reqPageFindData} from '../../api/personal';
       height: 0;
     }
     .backtop{
-      // height: 100%;
-      // width: 100%;
       border: 10px solid #9ddb95;
       border-top-color: transparent;
       border-left-color: transparent;
       border-right-color: transparent;
-      // background-color: #f2f5f6;
-      // box-shadow: 0 0 6px rgba(0,0,0, .12);
-      // text-align: center;
-      // line-height: 40px;
-      // color: #1989fa;
     }
   }
 </style>

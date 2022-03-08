@@ -3,7 +3,7 @@
     <div class="inApp">
       <TabBar></TabBar>
       <!-- <keep-alive> -->
-        <router-view></router-view>
+      <router-view></router-view>
       <!-- </keep-alive> -->
 
     </div>
@@ -12,7 +12,6 @@
 <script>
 
 import TabBar from './components/TabBar/TabBar.vue';
-// import Login from './components/Login/Login.vue';
 export default {
   name: "App",
   components: {
@@ -22,7 +21,6 @@ export default {
 </script>
 
 <style lang="less">
-
 html,
 body,
 div,

@@ -11,30 +11,28 @@ const app = new Koa()
 const server = http.createServer(app.callback())
 const wss = new WebSocket.Server({ server })    // 同一端口监听不同的服务
 
-
-const findSql = "select * from hot"
-// 数据库查询10条（0，10）
-// limit m(跳过m条),n（取n条记录）
-// 倒序拿到10条数据
-const pageFindSql = "select * from hot order by id desc limit ?,?"
-
-
 wss.on('connection', function connection(ws) {
   ws.on('message', async function incoming(message) {
     // 消息id
     let messageIndex = 0
-    const result = await DB.query(findSql)
+    const result = await DB.query(findExcerptSql)
     wss.clients.forEach((client) => {
       messageIndex++
       client.send(JSON.stringify(result))
     })
   })
 })
-
-
 // 处理跨域
 app.use(cors())
 app.use(router.routes())
+
+
+// 网易热评的接口----------------------------------------------------------------
+const findSql = "select * from hot"
+// 数据库查询10条（0，10）
+// limit m(跳过m条),n（取n条记录）
+// 倒序拿到10条数据
+const pageFindSql = "select * from hot order by id desc limit ?,?"
 
 
 // 查
@@ -63,6 +61,30 @@ router.get('/pageQuery', async (ctx, next) => {
 })
 
 
-server.listen(3001)
 
+// 书摘的接口----------------------------------------------------------------
+const findExcerptSql = "select * from excerpt"
+const addExcerptSql = "insert into excerpt(content, author, flag) values(?,?,?)"
+const updateExcerptSql = "update excerpt set content = ? where id = ?"
+
+router.get('/findExcerpt', async (ctx, next) => {
+  ctx.body = await DB.query(findExcerptSql)
+})
+
+router.get('/addExcerpt', async (ctx, next) => {
+  const {content, author, flag} = JSON.parse(ctx.request.query.params)
+  const addExcerptSqlParams = [content, author, flag]
+  ctx.body = await DB.query(addExcerptSql, addExcerptSqlParams)
+})
+
+router.get('/updateExcerpt', async (ctx, next) => {
+  const { id, content } = ctx.request.query
+  const updateExcerptSqlParams = [content, id]
+  await DB.query(updateExcerptSql, updateExcerptSqlParams)
+  ctx.body = await DB.query(findExcerptSql)
+})
+
+
+
+server.listen(3001)
 console.log('服务器地址:http://localhost:3001/find');

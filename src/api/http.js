@@ -83,8 +83,12 @@ export default function ajax(url, data = {}, type = "GET") {
             default:
                 break;
         }
-        promise.then(result => resolve(result.data))
+        try {
+            promise.then(result => resolve(result.data))
             // 处理失败的请求
             .catch(error => console.log("错误：",error))
+        } catch (error) {
+            console.log(error);
+        }
     })
 }
