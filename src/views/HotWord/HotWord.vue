@@ -36,6 +36,7 @@ import { reqPageFindData} from '../../api/personal';
         limit: 10,    // 每页显示数
         currentPage: parseInt(sessionStorage.getItem('page')),   // 当前页
         total: 0,
+        oneDay: 1000 * 60 * 60 * 24,      // 一天时间
       }
     },
     methods: {
@@ -59,16 +60,21 @@ import { reqPageFindData} from '../../api/personal';
         this.findData = result.list
         // console.log(this.findData);
         this.total = result.total
-      },
+      }
     },
     mounted(){
       let page = parseInt(sessionStorage.getItem('page'))
       // 有page就传，没有就传默认值1
       this.handlerPage(page || 1)
-      this.$notify({
-        message: "点击歌名可跳转到对应歌曲",
-        duration: 2000
-      })
+
+      // 当前时间戳大于过期时间，执行一次
+      if(Date.now() > ((+localStorage.getItem('expires') || 0) + this.oneDay)){
+        localStorage.setItem('expires', Date.now())
+        this.$notify({
+          message: "点击歌名可跳转到对应歌曲",
+          duration: 2000
+        })
+      }
     }
   }
 </script>
