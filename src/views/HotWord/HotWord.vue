@@ -52,6 +52,17 @@ import { reqPageFindData} from '../../api';
           this.findData = JSON.parse(res.data)
         }
       },
+      // 回到顶部动画效果
+      backTop(){
+        let top = document.body.scrollTop || document.documentElement.scrollTop
+        let timeId = setInterval(() => {
+          document.body.scrollTop = document.documentElement.scrollTop = top -= 50
+          if(top <= 0){
+            clearInterval(timeId)
+          } 
+        }, 10)
+        
+      },
       // 改变当前页触发的事件
       async handlerPage(page = 1){
         this.currentPage = page
@@ -59,6 +70,8 @@ import { reqPageFindData} from '../../api';
         const result = await reqPageFindData(this.limit, this.currentPage)
         this.findData = result.list
         this.total = result.total
+        // window.scrollTo(0, 0)
+        this.backTop()
       }
     },
     mounted(){
@@ -111,7 +124,6 @@ import { reqPageFindData} from '../../api';
         a{
           // display: block;
           color: #656D78;
-          
         }
       }
     }

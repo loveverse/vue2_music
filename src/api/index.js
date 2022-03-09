@@ -11,3 +11,5 @@ export const reqPageFindData = (limit, page) => http('/pageQuery', {limit,page})
 export const reqFindExcerptData = () => http('/findExcerpt')
 export const reqAddExcerptData = (params) => http('/addExcerpt', {params})
 export const reqUpdateExcerptData = (id,content) => http('/updateExcerpt', {id,content})
+export const reqDelExcerptData = (id) => http('/delExcerpt', {id})
+

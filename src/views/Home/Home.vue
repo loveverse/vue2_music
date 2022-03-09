@@ -1,18 +1,21 @@
 <template>
   <div class="excerpt">
-    <ul class="out">
+    <ul class="out outPad">
       <li class="card" v-for="item in findData" :key="item.id">
-        <el-input v-if="item.id == aId" v-model="item.content" type="textarea" autosize @blur="update(item.id, item.content)" v-focus></el-input>
-        <p v-else class="title" :data-id="item.id" @click="edit($event,item.content)">{{item.content}}</p>
-        <p class="author">--来自《{{item.author}}》</p>
+        <div class="artcle">
+          <el-input v-if="item.id === aId" v-model="item.content" type="textarea" autosize @blur="update(item.id, item.content)" v-focus></el-input>
+          <p v-else class="title" :data-id="item.id" @click="edit($event,item.content)">{{item.content}}</p>
+          <p class="author" v-if="item.author">--来自“{{item.author}}”</p>
+        </div>
+        <el-button type="danger" size="mini" class="del" @click="del(item.id)">删除</el-button>
       </li>
     </ul>
     <div class="iptText">
       <el-input
         type="textarea"
-        
         autosize
         placeholder="请输入内容"
+        ref="gainFocus"
         v-model="text">
       </el-input>
       <el-input
@@ -34,7 +37,7 @@
         findData: [],
         text:"",
         author: "",
-        aId: "",
+        aId: 0,
         compare: ""
       }
     },
@@ -71,25 +74,28 @@
           this.text = ""
         }
       },
+      // 编辑模式
       edit(e, content){
-        this.aId = e.currentTarget.dataset.id
-        this.compare = content.trim()
+        // 接口和数据库中id都为数字类型，而event对象是字符串，需要转换
+        this.aId = +e.currentTarget.dataset.id
+        this.compare = content
       },
       async update(id, content){
-        this.aId = ''
-        content = content.trim()
+        this.aId = 0
         if(this.compare !== content){
           await this.$API.reqUpdateExcerptData(id, content)
-          this.$message({
-            message: "内容修改成功！",
-            type: "success"
-          })
+          this.$message.success("内容修改成功！")
         }
-        this.compare = content.trim()
       },
+      async del(id){
+        await this.$API.reqDelExcerptData(id)
+        this.websocketTransfer()
+        this.$message.success("内容删除成功！")
+      }
     },
     mounted(){
       this.getFindExcerptData()
+      this.$refs.gainFocus.focus()
     },
     directives: {
       focus:{
@@ -106,29 +112,41 @@
   .excerpt{
     .out{
       .card{
-        margin: 20px auto;
-        padding: 15px 20px 20px;
-        border-radius: 15px;
-        box-shadow: 18px 18px 30px rgba(0, 0, 0, 0.2),
-          -18px -18px 30px rgba(255, 255, 255, 1);
-        /* 过渡时间 ease-out是指先快速 后慢速 */
-        transition: all 0.2s ease-out;
-        &:hover{
+        position: relative;
+        .artcle{
+          margin: 20px auto;
+          padding: 15px 20px 20px;
+          border-radius: 15px;
+          box-shadow: 18px 18px 30px rgba(0, 0, 0, 0.2),
+            -18px -18px 30px rgba(255, 255, 255, 1);
+          /* 过渡时间 ease-out是指先快速 后慢速 */
+          transition: all 0.2s ease-out;
+          &:hover{
           /* inset 是内部阴影 默认是外部阴影outset */
           box-shadow: 0 0 0 rgba(0, 0, 0, 0.2), 0 0 0 rgba(255, 255, 255, 0.8),
             inset 18px 18px 30px rgba(0, 0, 0, 0.1),
             inset -18px -18px 30px rgba(255, 255, 255, 1);
+          }
+          .title{
+            font-size: 20px;
+            // margin-bottom: 10px;
+            line-height: 33px;
+            white-space: pre-wrap;
+          }
+          .author{
+            margin-top: 10px;
+          }
         }
-        .title{
-          font-size: 20px;
-          // margin-bottom: 10px;
-          line-height: 33px;
-          white-space: pre-wrap;
-        }
-        .author{
-          margin-top: 10px;
+        .del{
+          position: absolute;
+          right: -80px;
+          top: 50%;
+          transform: translateY(-50%);
         }
       }
+    }
+    .outPad{
+      padding-right: 80px;
     }
     .iptText{
       display: flex;

@@ -148,8 +148,12 @@ table {
 a {
   text-decoration: none;
 }
-.inApp {
-  max-width: 1200px;
+#app{
+  max-width: 1220px;
   margin: 0 auto;
+  
+}
+.inApp {
+  margin: 0 10px;
 }
 </style>

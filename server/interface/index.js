@@ -66,6 +66,7 @@ router.get('/pageQuery', async (ctx, next) => {
 const findExcerptSql = "select * from excerpt"
 const addExcerptSql = "insert into excerpt(content, author, flag) values(?,?,?)"
 const updateExcerptSql = "update excerpt set content = ? where id = ?"
+const delExcerptSql = "delete from excerpt where id = ?"
 
 router.get('/findExcerpt', async (ctx, next) => {
   ctx.body = await DB.query(findExcerptSql)
@@ -83,8 +84,11 @@ router.get('/updateExcerpt', async (ctx, next) => {
   await DB.query(updateExcerptSql, updateExcerptSqlParams)
   ctx.body = await DB.query(findExcerptSql)
 })
-
+router.get('/delExcerpt', async (ctx, next) => {
+  await DB.query(delExcerptSql, ctx.request.query.id)
+  ctx.body = await DB.query(findExcerptSql)
+})
 
 
 server.listen(3001)
-console.log('服务器地址:http://localhost:3001/find');
+console.log('服务器地址:http://localhost:3001/findExcerpt');
