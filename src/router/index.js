@@ -7,6 +7,11 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
+    redirect:"/home"
+  },
+  {
+    path: "/home",
+    name: "home",
     component: () => import('../views/Home/Home.vue')
   },
   {
@@ -14,6 +19,15 @@ const routes = [
     name: "hot",
     component: () => import('../views/HotWord/HotWord.vue')
   },
+  {
+    path: "/404",
+    name: "404",
+    component: () => import('../views/Error404/Error404.vue')
+  },
+  {
+    path: "*",
+    redirect: "/404"
+  }
 ];
 
 const router = new VueRouter({

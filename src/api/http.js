@@ -4,7 +4,8 @@ import 'nprogress/nprogress.css';
 
 
 const http = axios.create({
-    baseURL: "http://localhost:3001",
+    // baseURL: process.env.VUE_APP_BASE_API,
+    baseURL: "/api",
     timeout: 50000,
 })
 http.interceptors.request.use(config => {
