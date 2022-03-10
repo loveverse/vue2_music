@@ -91,5 +91,5 @@ router.get('/delExcerpt', async (ctx, next) => {
 
 
 server.listen(10000)
-console.log(`服务器地址:${process.env.VUE_APP_BASE_API}/findExcerpt`);
-// console.log('服务器地址:http://1.12.252.87:10000/findExcerpt');
+// console.log(`服务器地址:${process.env.VUE_APP_BASE_API}/findExcerpt`);
+console.log('服务器地址:http://1.12.252.87:10000/findExcerpt');

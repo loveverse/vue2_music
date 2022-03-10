@@ -12,6 +12,7 @@ connection.connect()
 
 const findSql = 'select content from hot'
 const addSql = 'insert into hot(name, url, picurl, artistsname, avatarurl, nickname, content) values(?,?,?,?,?,?,?)'
+const baseUrlArray = []
 const baseUrl = 'https://api.uomg.com/api/comments.163'
 
 connection.query(findSql, function(err, result) {
