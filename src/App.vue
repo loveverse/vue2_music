@@ -1,33 +1,26 @@
 <template>
   <div id="app">
     <div class="inApp">
-      <!-- <Header></Header> -->
-      <TabBar></TabBar>
+      <Header></Header>
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
-      <!-- <Login></Login> -->
     </div>
   </div>
 </template>
 <script>
 import Header from "./components/Header/Header.vue";
 import Main from "./views/Main/Main.vue";
-import TabBar from './components/TabBar/TabBar.vue';
-// import Login from './components/Login/Login.vue';
 export default {
   name: "App",
   components: {
     Header,
     Main,
-    TabBar
-    // Login
   },
 };
 </script>
 
 <style lang="less">
-// @import './assets/public.less';
 
 html,
 body,

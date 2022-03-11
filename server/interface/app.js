@@ -4,7 +4,6 @@ const WebSocket = require('ws')
 const cors = require('koa2-cors')
 const router = require('koa-router')()
 const DB = require('../mysql/sqlConfig')
-// const WebSocketApi = require('../utils/ws')
 
 
 // 创建一个Koa对象
@@ -58,8 +57,6 @@ app.use(router.routes())
 
 
 
-
-
 // 查
 router.get('/find', async (ctx, next) => {
   ctx.body = await DB.query(findSql)
@@ -86,6 +83,7 @@ router.get('/del', async (ctx, next) => {
   ctx.body = await DB.query(findSql)
 })
 
-server.listen(3000)
+server.listen(3451)
 
-console.log('服务器地址:http://localhost:3000/find');
+// console.log('服务器地址:http://localhost:3451/find');
+console.log('服务器地址:http://1.12.252.87:3451/find');
