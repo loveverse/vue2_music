@@ -1,9 +1,11 @@
 module.exports = {
     devServer: {
         open: true,
+        // host: "localhost",
+        // post: 3450,
         proxy: {
             '/api': {
-                target: process.env.VUE_APP_BASE_API,
+                target: 'http://loveverse.top',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/api': ''

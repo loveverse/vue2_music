@@ -1,13 +1,13 @@
 <template>
   <div class="excerpt">
-    <ul class="out outPad">
+    <ul class="out" :class="flag && 'outPad'">
       <li class="card" v-for="item in findData" :key="item.id">
         <div class="artcle">
           <el-input v-if="item.id === aId" v-model="item.content" type="textarea" autosize @blur="update(item.id, item.content)" v-focus></el-input>
           <p v-else class="title" :data-id="item.id" @click="edit($event,item.content)">{{item.content}}</p>
           <p class="author" v-if="item.author">--来自“{{item.author}}”</p>
         </div>
-        <el-button type="danger" size="mini" class="del" @click="del(item.id)">删除</el-button>
+        <el-button v-if="flag" type="danger" size="mini" class="del" @click="del(item.id)">删除</el-button>
       </li>
     </ul>
     <div class="iptText">
@@ -38,7 +38,8 @@
         text:"",
         author: "",
         aId: 0,
-        compare: ""
+        compare: "",
+        flag: false
       }
     },
     methods: {
@@ -77,6 +78,7 @@
       },
       // 编辑模式
       edit(e, content){
+        if(!this.flag) return
         // 接口和数据库中id都为数字类型，而event对象是字符串，需要转换
         this.aId = +e.currentTarget.dataset.id
         this.compare = content
@@ -97,6 +99,18 @@
     mounted(){
       this.getFindExcerptData()
       this.$refs.gainFocus.focus()
+    },
+    watch: {
+      text: {
+        immediate: true,
+        handler(newVal){
+          if(newVal === 'loveverse'){
+            this.flag = true
+          }else{
+            this.flag = false
+          }
+        }
+      }
     },
     directives: {
       focus:{
