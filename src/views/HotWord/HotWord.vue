@@ -42,7 +42,7 @@ import { reqPageFindData} from '../../api';
     methods: {
       websocketTransfer(){
         const ws = new WebSocket('wss://loveverse.top/socket')
-        // const ws = new WebSocket('wss://localhost:3450')
+        // const ws = new WebSocket('ws://localhost:3450')
         // 客户端与服务端建立连接时触发，此时可向服务端传递参数
         ws.onopen = function(){
           ws.send(undefined)

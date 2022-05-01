@@ -5,17 +5,16 @@
       <!-- <keep-alive> -->
       <router-view></router-view>
       <!-- </keep-alive> -->
-
     </div>
+      <!-- <img src="https://api.ixiaowai.cn/api/api.php" alt=""> -->
   </div>
 </template>
 <script>
-
-import TabBar from './components/TabBar/TabBar.vue';
+import TabBar from "./components/TabBar/TabBar.vue";
 export default {
   name: "App",
   components: {
-    TabBar
+    TabBar,
   },
 };
 </script>
@@ -148,12 +147,16 @@ table {
 a {
   text-decoration: none;
 }
-#app{
+#app {
   max-width: 1220px;
   margin: 0 auto;
-  
 }
 .inApp {
   margin: 0 10px;
 }
+
+// body {
+//   background: url("https://api.ixiaowai.cn/api/api.php") center/cover no-repeat;
+//   // filter: blur(0.3);
+// }
 </style>
