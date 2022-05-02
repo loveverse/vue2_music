@@ -5,10 +5,10 @@ module.exports = {
         // post: 3450,
         proxy: {
             '/api': {
-                target: 'http://localhost:3450',
+                target: 'http://loveverse.top',
                 changeOrigin: true,
                 pathRewrite: {
-                    '^/aapi': ''
+                    '^/api': ''
                 }
             }
         }

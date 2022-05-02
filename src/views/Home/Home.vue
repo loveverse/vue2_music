@@ -19,7 +19,10 @@
           >
             {{ item.content }}
           </p>
-          <p class="author" v-if="item.author">--来自“{{ item.author }}”</p>
+          <div class="tip">
+            <p class="date_now">{{ item.date }}</p>
+            <p class="author" v-if="item.author">--来自“{{ item.author }}”</p>
+          </div>
         </div>
         <el-button
           v-if="flag"
@@ -55,11 +58,15 @@
     <el-backtop :bottom="100">
       <div class="backtop"></div>
     </el-backtop>
+    <div class="records">
+      <a href="https://beian.miit.gov.cn">备案号：鄂ICP备2021020610号</a>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from "axios";
+import formatDate from '../../utils/formatting.js';
 export default {
   name: "Home",
   data() {
@@ -75,7 +82,7 @@ export default {
   methods: {
     websocketTransfer() {
       // const ws = new WebSocket("ws://localhost:3450");
-      const ws = new WebSocket('wss://loveverse.top/socket')
+      const ws = new WebSocket("wss://loveverse.top/socket");
       // 客户端与服务端建立连接时触发，此时可向服务端传递参数
       ws.onopen = function () {
         ws.send(undefined);
@@ -95,10 +102,12 @@ export default {
         this.$message.warning("输入的内容不能为空！");
         this.text = "";
       } else {
+        let dateData = formatDate(new Date(), 'YYYY-MM-DD hh:mm:ss')
         const params = {
           content: this.text.trim(),
           author: this.author,
           flag: 1,
+          date: dateData
         };
         await this.$API.reqAddExcerptData(params);
         this.websocketTransfer();
@@ -181,7 +190,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 .excerpt {
   .out {
     .card {
@@ -206,8 +214,17 @@ export default {
           line-height: 33px;
           white-space: pre-wrap;
         }
-        .author {
-          margin-top: 10px;
+        .tip {
+          display: flex;
+          justify-content: space-between;
+          .author {
+            margin-top: 10px;
+          }
+          .date_now{
+            margin-left: 5px;
+            color: #999;
+          }
+
         }
       }
       .del {
@@ -233,13 +250,17 @@ export default {
   /deep/ .el-backtop {
     width: 0;
     height: 0;
-    bottom: 55px!important;
+    bottom: 55px !important;
   }
   .backtop {
     border: 10px solid #9ddb95;
     border-top-color: transparent;
     border-left-color: transparent;
     border-right-color: transparent;
+  }
+  .records {
+    margin: 0 auto;
+    text-align: center;
   }
 }
 </style>

@@ -64,7 +64,7 @@ router.get('/pageQuery', async (ctx, next) => {
 
 // 书摘的接口----------------------------------------------------------------
 const findExcerptSql = "select * from excerpt"
-const addExcerptSql = "insert into excerpt(content, author, flag) values(?,?,?)"
+const addExcerptSql = "insert into excerpt(content, author, flag,date) values(?,?,?,?)"
 const updateExcerptSql = "update excerpt set content = ? where id = ?"
 const delExcerptSql = "delete from excerpt where id = ?"
 
@@ -73,8 +73,8 @@ router.get('/findExcerpt', async (ctx, next) => {
 })
 
 router.get('/addExcerpt', async (ctx, next) => {
-  const {content, author, flag} = JSON.parse(ctx.request.query.params)
-  const addExcerptSqlParams = [content, author, flag]
+  const {content, author, flag,date} = JSON.parse(ctx.request.query.params)
+  const addExcerptSqlParams = [content, author, flag,date]
   ctx.body = await DB.query(addExcerptSql, addExcerptSqlParams)
 })
 
