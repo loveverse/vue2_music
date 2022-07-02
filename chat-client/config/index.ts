@@ -1,11 +1,11 @@
-let domain: String;
+let domain;
 switch (import.meta.env.MODE) {
   case "development":
-    domain = "";
-
+    domain = "http://localhost:5200";
     break;
   case "production":
-    domain = "";
+    domain = "http://loveverse.top";
+    break;
   default:
     break;
 }

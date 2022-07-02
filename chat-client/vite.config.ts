@@ -3,6 +3,7 @@ import { resolve } from "path";
 import vue from "@vitejs/plugin-vue";
 //引入自动引入插件
 import AutoImport from "unplugin-auto-import/vite";
+import { domain } from "./config/index";
 
 function reslovePath(path: string) {
   return resolve(__dirname, path);
@@ -17,6 +18,15 @@ export default defineConfig(async ({ command, mode }) => {
   if (command === "serve") {
     // dev配置
     return {
+      server: {
+        proxy: {
+          "/api": {
+            target: domain,
+            changeOrigin: true,
+            rewrite: (path) => path.replace(/^\/api/, ""),
+          },
+        },
+      },
       plugins: [
         vue(),
         AutoImport({

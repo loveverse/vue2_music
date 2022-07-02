@@ -1,10 +1,10 @@
-const mysql = require("mysql");
+const mysql = require("mysql2");
 
 let dbConfig = {
   host: "1.12.252.87",
-  user: "chat",
+  user: "verse",
   password: "123456",
-  database: "chat",
+  database: "verse",
 };
 
 let pool = mysql.createPool(dbConfig);
