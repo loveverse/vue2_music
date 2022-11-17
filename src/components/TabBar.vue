@@ -1,10 +1,8 @@
 <template>
-  <div>
     <ul>
       <li><router-link to="/">首页</router-link></li>
       <li><router-link to="/hot">网易热评</router-link></li>
     </ul>
-  </div>
 </template>
 
 <script>

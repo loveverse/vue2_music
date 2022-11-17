@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect:"/home"
+    redirect: "/home"
   },
   {
     path: "/home",
@@ -19,6 +19,12 @@ const routes = [
     name: "hot",
     component: () => import('../views/HotWord/HotWord.vue')
   },
+  {
+    path: "/plot",
+    name: "plot",
+    component: () => import('../views/plot.vue')
+  },
+
   {
     path: "/404",
     name: "404",

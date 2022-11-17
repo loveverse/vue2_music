@@ -66,7 +66,7 @@
 
 <script>
 // import axios from "axios";
-import formatDate from '../../utils/formatting.js';
+import formatDate from "../../utils/formatting.js";
 export default {
   name: "Home",
   data() {
@@ -102,12 +102,12 @@ export default {
         this.$message.warning("输入的内容不能为空！");
         this.text = "";
       } else {
-        let dateData = formatDate(new Date(), 'YYYY-MM-DD hh:mm:ss')
+        let dateData = formatDate(new Date(), "YYYY-MM-DD hh:mm:ss");
         const params = {
           content: this.text.trim(),
           author: this.author,
           flag: 1,
-          date: dateData
+          date: dateData,
         };
         await this.$API.reqAddExcerptData(params);
         this.websocketTransfer();
@@ -220,11 +220,10 @@ export default {
           .author {
             margin-top: 10px;
           }
-          .date_now{
+          .date_now {
             margin-left: 5px;
             color: #999;
           }
-
         }
       }
       .del {
