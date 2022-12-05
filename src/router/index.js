@@ -7,17 +7,32 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "/personal"
+    redirect: "/home"
   },
   {
-    path: "/main",
-    name: "main",
-    component: () => import('../views/Main/Main.vue')
+    path: "/home",
+    name: "home",
+    component: () => import('../views/Home/Home.vue')
   },
   {
-    path: "/personal",
-    name: "perosnal",
-    component: () => import('../views/Personal/Personal.vue')
+    path: "/hot",
+    name: "hot",
+    component: () => import('../views/HotWord/HotWord.vue')
+  },
+  // {
+  //   path: "/plot",
+  //   name: "plot",
+  //   component: () => import('../views/plot.vue')
+  // },
+
+  {
+    path: "/404",
+    name: "404",
+    component: () => import('../views/Error404/Error404.vue')
+  },
+  {
+    path: "*",
+    redirect: "/404"
   }
 ];
 

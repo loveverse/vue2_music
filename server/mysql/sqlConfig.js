@@ -3,7 +3,7 @@ const mysql = require('mysql')
 // 连接数据库配置
 function _connection(){
   const connection = mysql.createConnection({
-    host: "1.12.252.87",
+    host: "1.15.42.9",
     user: 'verse',
     password: '123456',
     database: 'verse'

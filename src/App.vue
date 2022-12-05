@@ -1,27 +1,25 @@
 <template>
   <div id="app">
     <div class="inApp">
-      <Header></Header>
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
+      <TabBar></TabBar>
+      <!-- <keep-alive> -->
+      <router-view></router-view>
+      <!-- </keep-alive> -->
     </div>
+      <!-- <img src="https://api.ixiaowai.cn/api/api.php" alt=""> -->
   </div>
 </template>
 <script>
-import Header from "./components/Header/Header.vue";
-import Main from "./views/Main/Main.vue";
+import TabBar from "./components/TabBar.vue";
 export default {
   name: "App",
   components: {
-    Header,
-    Main,
+    TabBar,
   },
 };
 </script>
 
 <style lang="less">
-
 html,
 body,
 div,
@@ -149,30 +147,16 @@ table {
 a {
   text-decoration: none;
 }
-.inApp {
-  
-  max-width: 1200px;
+#app {
+  max-width: 1220px;
   margin: 0 auto;
 }
+.inApp {
+  margin: 0 10px;
+}
 
-// /* 中型大小设备（横屏的平板, 小于 768px） */
-// @media only screen and (max-width: 768px) {
-//   .inApp {
-//     width: 500px;
-//   }
+// body {
+//   background: url("https://api.ixiaowai.cn/api/api.php") center/cover no-repeat;
+//   // filter: blur(0.3);
 // }
-// /* 大型设备（电脑, 大于 768和小于1200） */
-// @media only screen and (min-width: 768px) and (max-width: 1200px) {
-//   .inApp {
-//     width: 1000px;
-//   }
-// }
-// /* 超大型设备（大尺寸电脑屏幕, 大于 1200px） */
-// @media only screen and (min-width: 1200px) {
-//   .inApp {
-//     width: 1200px;
-//   }
-// }
-
-
 </style>
