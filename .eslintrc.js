@@ -1,7 +1,9 @@
 module.exports = {
+  root: true,
   env: {
     browser: true,
     es2021: true,
+    node: true,
   },
   extends: [
     "eslint:recommended",
@@ -9,10 +11,13 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
   ],
   overrides: [],
-  parser: "@typescript-eslint/parser",
+  //   解析vue
+  parser: "vue-eslint-parser",
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
+    // 解析ts
+    parser: "@typescript-eslint/parser",
   },
   plugins: ["vue", "@typescript-eslint"],
   rules: {},
