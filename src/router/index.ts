@@ -7,8 +7,20 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/home",
-    name: "home",
-    component: () => import("../components/HelloWorld.vue"),
+    name: "/home",
+    component: () => import("@/views/index.vue"),
+    children: [
+      {
+        path: "/home/person",
+        name: "person",
+        component: () => import("@/views/person/index.vue"),
+      },
+      {
+        path: "/home/hotword",
+        name: "hotword",
+        component: () => import("@/views/hotword/index.vue"),
+      },
+    ],
   },
 ];
 const router = createRouter({
