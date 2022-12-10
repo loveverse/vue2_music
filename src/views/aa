@@ -1,0 +1,139 @@
+<template>
+  <div class="wrapper">
+    <div class="main_left">
+      <div class="box_header">
+        <div class="left">
+          总考位：
+          <el-input
+            v-model="total"
+            type="number"
+            size="small"
+            :min="1"
+            :max="100"
+          ></el-input
+          >个
+        </div>
+        <div class="middle">
+          行数：
+          <el-input-number
+            v-model="line"
+            size="small"
+            disabled
+            :min="1"
+            :max="10"
+          ></el-input-number
+          >行
+        </div>
+        <div class="right">
+          列数：
+          <el-input-number
+            v-model="row"
+            size="small"
+            :min="1"
+            :max="10"
+          ></el-input-number
+          >列
+        </div>
+      </div>
+      <div class="box_main">
+        <el-row
+          :gutter="20"
+          v-for="(item, index) in line"
+          :key="index"
+          class="line_list"
+        >
+          <el-col
+            v-for="(subItem, subIndex) in row"
+            :key="subIndex"
+            :span="rowSize"
+          >
+            <div class="bg-purple">
+              {{ item * (subIndex + 1) }}
+            </div></el-col
+          >
+        </el-row>
+      </div>
+    </div>
+    <div class="main_right"></div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "",
+  data() {
+    return {
+      total: 10,
+      row: 1, // 列
+      rowSize: 1,
+      line: 1, // 行
+    };
+  },
+  watch: {
+    total: {
+      immediate: true,
+      handler(newVal) {
+        this.total = newVal;
+        this.line = Math.ceil(this.total / this.row);
+      },
+    },
+    row: {
+      immediate: true,
+      handler(newVal) {
+        this.rowSize = parseInt(24 / newVal);
+        // this.total = this.row * this.line;
+        this.line = Math.ceil(this.total / this.row);
+        console.log(this.rowSize);
+      },
+    },
+    // line: {
+    //   immediate: true,
+    //   handler(newVal) {
+    //     this.line = newVal;
+    //     this.total = this.row * this.line;
+    //   },
+    // },
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  & > div {
+    width: 49%;
+    .box_header {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      white-space: nowrap;
+      .left {
+        display: flex;
+        align-items: center;
+        /deep/.el-input {
+          input {
+            min-width: 70px;
+          }
+        }
+      }
+    }
+    .box_main {
+      .line_list {
+        &:not(:last-child) {
+          margin-bottom: 20px;
+        }
+      }
+      // height: 30px;
+      .el-row {
+        // height: 100%;
+        .bg-purple {
+          height: 30px;
+          background: red;
+        }
+      }
+    }
+  }
+}
+</style>
