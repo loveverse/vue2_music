@@ -1,6 +1,6 @@
-import axios from 'axios'
+import axios from 'axios';
 import Nprogress from 'nprogress';
-import 'nprogress/nprogress.css'
+import 'nprogress/nprogress.css';
 
 
 const http = axios.create({
@@ -8,15 +8,14 @@ const http = axios.create({
     timeout: 50000,
 })
 http.interceptors.request.use(config => {
-    Nprogress.start()
-    return config
+    Nprogress.start();
+    return config;
 })
 http.interceptors.response.use(response => {
-    Nprogress.done()
-    // console.log(response);
-    return response
+    Nprogress.done();
+    return response;
 }, error => {
-    Nprogress.done()
+    Nprogress.done();
     // 错误响应信息
     // console.log(error.response);
     if (error && error.response) {
@@ -66,7 +65,7 @@ http.interceptors.response.use(response => {
     return Promise.reject(error.message)
 })
 
-export default function ajax(url, data = {}, type = "POST") {
+export default function ajax(url, data = {}, type = "GET") {
     // data作为请求体发送的的数据只适用put,post,patch
     let promise;
     return new Promise((resolve, reject) => {
@@ -83,8 +82,12 @@ export default function ajax(url, data = {}, type = "POST") {
             default:
                 break;
         }
-        promise.then(result => resolve(result.data))
-            // 处理失败的请求
-            .catch(error => console.log("错误：",error))
+        try {
+            promise.then(result => resolve(result.data))
+                // 处理失败的请求
+                .catch(error => console.log("错误：", error))
+        } catch (error) {
+            console.log(error);
+        }
     })
 }

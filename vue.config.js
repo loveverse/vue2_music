@@ -1,16 +1,17 @@
 module.exports = {
     devServer: {
-        open: true,
+        disableHostCheck: true,
+        // post: 40001,
         proxy: {
             '/api': {
-                target: 'https://music-api-delta.vercel.app',
+                target: 'http://loveverse.top',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/api': ''
                 }
             }
-        },
+        }
     },
-    lintOnSave: false,
+    lintOnSave: 'warning',
     productionSourceMap: false
 }
