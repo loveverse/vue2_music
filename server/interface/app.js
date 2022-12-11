@@ -83,7 +83,7 @@ router.get('/del', async (ctx, next) => {
   ctx.body = await DB.query(findSql)
 })
 
-server.listen(3451)
+server.listen(40001)
 
-// console.log('服务器地址:http://localhost:3451/find');
-console.log('服务器地址:http://1.12.252.87:3451/find');
+// console.log('服务器地址:http://localhost:40001/find');
+console.log('服务器地址:http://1.15.42.9:40001/find');
