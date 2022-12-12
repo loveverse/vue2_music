@@ -1,9 +1,10 @@
 <template>
   <el-menu
-    :default-active="activeIndex"
+    :default-active="$route.path"
     class="el-menu-demo"
     mode="horizontal"
     :ellipsis="false"
+    router
     @select="handleSelect"
   >
     <template v-for="item in state.menuList">
@@ -20,20 +21,20 @@
 interface IState {
   menuList: object[];
 }
-const activeIndex = ref("1");
+const activeIndex = ref("/home/person");
 const state = reactive<IState>({
   // 没写children，自动隐藏
   menuList: [
     {
       icon: "",
-      path: "1",
+      path: "/home/person",
       title: "首页",
       permiss: "1",
       children: [],
     },
     {
       icon: "",
-      path: "2",
+      path: "/home/hotword",
       title: "网易热评",
       permiss: "1",
       children: [
@@ -61,10 +62,17 @@ const state = reactive<IState>({
         },
       ],
     },
+    {
+      icon: "",
+      path: "/home/issue",
+      title: "学习问题",
+      permiss: "1",
+      children: [],
+    },
   ],
 });
 onMounted(() => {
-  console.log("[ state.menuList ] >", state.menuList);
+  // console.log("[ state.menuList ] >", state.menuList);
 });
 const handleSelect = (key: string, keyPath: string[]) => {
   console.log(key, keyPath);

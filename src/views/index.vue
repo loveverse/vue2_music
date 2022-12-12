@@ -4,9 +4,15 @@
       <ComHeader></ComHeader>
     </el-header>
     <el-main>
-      <router-view>
-        <Transition name="move" mode="out-in"> </Transition>
+      <!-- 直接使用router-view不显示 -->
+      <router-view v-slot="{ Component }">
+        <transition name="move" mode="out-in">
+          <component :is="Component"></component>
+        </transition>
       </router-view>
+
+      <!-- <router-view> -->
+      <!-- </router-view> -->
     </el-main>
   </el-container>
 </template>

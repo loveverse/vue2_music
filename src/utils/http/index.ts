@@ -12,7 +12,7 @@ const http: AxiosInstance = axios.create({
 
 http.interceptors.request.use((config: RequestConfig) => {
   if (localStorage.getItem("token")) {
-    config.headers["ZRT-MEMBER-TOKEN"] = localStorage.getItem("token");
+    config.headers["LOVE-TOKEN"] = localStorage.getItem("token");
   }
   return config;
 });

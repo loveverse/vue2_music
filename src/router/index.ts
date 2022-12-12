@@ -9,6 +9,7 @@ const routes: RouteRecordRaw[] = [
     path: "/home",
     name: "/home",
     component: () => import("@/views/index.vue"),
+    redirect: "/home/person",
     children: [
       {
         path: "/home/person",
@@ -19,6 +20,11 @@ const routes: RouteRecordRaw[] = [
         path: "/home/hotword",
         name: "hotword",
         component: () => import("@/views/hotword/index.vue"),
+      },
+      {
+        path: "/home/issue",
+        name: "issue",
+        component: () => import("@/views/issue/index.vue"),
       },
     ],
   },

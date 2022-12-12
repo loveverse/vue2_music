@@ -1,5 +1,4 @@
 <template>
-  
   <template v-if="menuItem.children">
     <el-sub-menu :index="menuItem.path" v-if="menuItem.children.length">
       <template #title>{{ menuItem.title }}</template>
@@ -22,7 +21,7 @@ interface IProps {
 }
 const props = defineProps<IProps>();
 onMounted(() => {
-  console.log("[ props.item ] >", props.menuItem);
+  // console.log("[ props.item ] >", props.menuItem);
 });
 </script>
 <style lang="scss" scoped></style>
