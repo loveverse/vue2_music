@@ -6,22 +6,23 @@
     :ellipsis="false"
     @select="handleSelect"
   >
-    <template v-for="(item, index) in state.menuList" :key="index">
-      <ComList :menuItem="item"></ComList>
+    <template v-for="item in state.menuList">
+      <ComItem :menuItem="item"></ComItem>
     </template>
-    <!-- <div v-for="item in state.menuList">{{ item.title }}</div> -->
     <div class="flex-grow" />
-
-    <el-button type="primary">登录</el-button>
+    <div class="btn_login">
+      <el-button type="primary">登录</el-button>
+    </div>
   </el-menu>
 </template>
 
 <script lang="ts" setup name="ComHeader">
-const activeIndex = ref("1");
 interface IState {
   menuList: object[];
 }
+const activeIndex = ref("1");
 const state = reactive<IState>({
+  // 没写children，自动隐藏
   menuList: [
     {
       icon: "",
@@ -35,7 +36,30 @@ const state = reactive<IState>({
       path: "2",
       title: "网易热评",
       permiss: "1",
-      children: [],
+      children: [
+        {
+          icon: "",
+          path: "3",
+          title: "二级目录",
+          permiss: "2",
+          children: [
+            {
+              icon: "",
+              path: "4",
+              title: "三级目录",
+              permiss: "3",
+              children: [],
+            },
+          ],
+        },
+        {
+          icon: "",
+          path: "5",
+          title: "二级目录",
+          permiss: "4",
+          children: [],
+        },
+      ],
     },
   ],
 });
@@ -49,5 +73,9 @@ const handleSelect = (key: string, keyPath: string[]) => {
 <style lang="scss" scoped>
 .flex-grow {
   flex-grow: 1;
+}
+.btn_login {
+  display: flex;
+  align-items: center;
 }
 </style>

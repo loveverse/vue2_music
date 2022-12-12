@@ -7,8 +7,8 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    ComHeader: typeof import('./src/components/ComHeader.vue')['default']
-    ComList: typeof import('./src/components/ComList.vue')['default']
+    ComHeader: typeof import('./src/components/ComHeader/index.vue')['default']
+    ComItem: typeof import('./src/components/ComHeader/ComItem.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElHeader: typeof import('element-plus/es')['ElHeader']
